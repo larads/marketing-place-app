@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Stack } from 'expo-router'
 import '../styles/global.css'
 import { AppModal } from '../shared/components/AppModal'
+import ToastManager from 'toastify-react-native/components/ToastManager'
 
 const queryClient = new QueryClient()
 
@@ -14,6 +15,7 @@ export default function RootLayout() {
                 <Stack.Screen name="(private)" />
             </Stack>
             <AppModal />
+            <ToastManager useModal={false} />
         </QueryClientProvider>
     )
 }

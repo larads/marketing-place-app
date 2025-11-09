@@ -1,34 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { useAppModal } from '../../shared/hooks/useAppModal'
 import { useRegisterMutation } from '../../shared/queries/auth/use-register.mutation'
 import { useUserStore } from '../../shared/store/user-store'
 import { RegisterFormData, registerScheme } from './register.schema'
+import { useImage } from '../../shared/hooks/useImage'
 
 export const useRegisterViewModel = () => {
   const userRegisterMutation = useRegisterMutation()
-  const { setSession, user } = useUserStore()
-  const modals = useAppModal()
+  const { setSession } = useUserStore()
+  const { handleSelectImage } = useImage()
 
-  const handleSelectAvatar = () => {
-    modals.showSelection({
-      title: 'Selecionar foto',
-      message: 'Escolha uma opção:',
-      options: [
-        {
-          text: 'Galeria',
-          icon: 'images',
-          variant: 'primary',
-          onPress: () => alert('Galeria'),
-        },
-        {
-          text: 'Câmera',
-          icon: 'camera',
-          variant: 'primary',
-          onPress: () => alert('Câmera'),
-        },
-      ],
-    })
+  const handleSelectAvatar = async () => {
+    await handleSelectImage()
   }
 
   const {
@@ -59,8 +42,6 @@ export const useRegisterViewModel = () => {
       user: mutationResponse.user,
     })
   })
-
-  console.log(user)
 
   return {
     control,
